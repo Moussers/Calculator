@@ -3,8 +3,6 @@
 #include <iostream>
 #include"resource.h"
 
-//DOUBLE g_currrentResult = 0.0;
-//BOOL g_isNewExpression = TRUE;
 CONST CHAR g_sz_WINDOW_CLASS[] = "Калькулятор";
 CONST INT g_i_BUTTON_SIZE = 50;
 CONST INT g_i_INTERVAL = 1;
@@ -78,10 +76,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 				NULL
 			);
 		}
-		CreateWindowEx
+		HWND hButtonZero = CreateWindowEx
 		(
 			NULL, "Button", "0",
-			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_BITMAP,
 			g_i_BUTTON_START_X, Y_BUTTON_POSITION(3),
 			g_i_DOUBLE_BUTTON_SIZE, g_i_BUTTON_SIZE,
 			hwnd,
@@ -89,6 +87,14 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 			GetModuleHandle(NULL),
 			NULL
 		);
+		HBITMAP hbmpZero = (HBITMAP)LoadImage
+		(
+			GetModuleHandle(NULL),
+			"zero_point.bmp", IMAGE_BITMAP,
+			LR_DEFAULTSIZE, LR_DEFAULTSIZE,
+			LR_LOADFROMFILE
+		);
+		SendMessage(hButtonZero, BM_SETIMAGE, 0, (LPARAM)hbmpZero);
 		CreateWindowEx
 		(
 			NULL, "Button", ".",
@@ -375,5 +381,3 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		return FALSE;
 }
-
-///new action
