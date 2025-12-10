@@ -369,17 +369,48 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_COMMAND, LOWORD(wParam - 0x60 + IDC_BUTTON_0),0);
 		}
 	}
-		break;
-		case WM_DESTROY:
-			FreeConsole();
-			PostQuitMessage(0);
+	break;
+	case WM_CONTEXTMENU:
+	{
+		HMENU cmMain = CreatePopupMenu();
+		AppendMenu (cmMain, MF_STRING, IDM_SQUARE_BLUE, "Square blue");
+		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Metal mistral");
+		AppendMenu(cmMain, MF_SEPARATOR, NULL, NULL);
+		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "Exit");
+		BOOL selected_item = TrackPopupMenuEx
+		(
+			cmMain, 
+			TPM_RIGHTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_RIGHTBUTTON | TPM_VERNEGANIMATION,
+			LOWORD(lParam), HIWORD(lParam),
+			//0,		//Reserved
+			hwnd,
+			NULL
+		);
+		switch (selected_item) 
+		{
+		case IDM_SQUARE_BLUE:
+			SetSkin(hwnd, "square_blue");
 			break;
-		case WM_CLOSE:
-			DestroyWindow(hwnd);
+		case IDM_METAL_MISTRAL:
+			SetSkin(hwnd, "metal_mistral");
 			break;
-		default:return DefWindowProc(hwnd, uMsg, wParam, lParam);
+		case IDM_EXIT:
+			SendMessage(hwnd, WM_CLOSE, 0, 0);
+			break;
 		}
-		return FALSE;
+		DestroyMenu(cmMain);
+	}
+	break;
+	case WM_DESTROY:
+		FreeConsole();
+		PostQuitMessage(0);
+		break;
+	case WM_CLOSE:
+		DestroyWindow(hwnd);
+		break;
+	default:return DefWindowProc(hwnd, uMsg, wParam, lParam);
+	}
+	return FALSE;
 }
 VOID SetSkin(HWND hwnd, CONST CHAR skin[]) 
 {
