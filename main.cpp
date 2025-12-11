@@ -33,7 +33,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	wClass.cbWndExtra = 0;
 	wClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wClass.hbrBackground = CreateSolidBrush(RGB(200, 250, 200));
 	wClass.hInstance = hInstance;
 	wClass.lpszMenuName = NULL;
 	wClass.lpfnWndProc = WndProc;
@@ -373,10 +373,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CONTEXTMENU:
 	{
 		HMENU cmMain = CreatePopupMenu();
-		AppendMenu (cmMain, MF_STRING, IDM_SQUARE_BLUE, "Square blue");
-		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Metal mistral");
+		AppendMenu (cmMain, MF_STRING, IDM_SQUARE_BLUE, "Сний цвет кнопок");					//Square blue
+		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Металический цвет кнопок");			//Metal mistral
 		AppendMenu(cmMain, MF_SEPARATOR, NULL, NULL);
-		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "Exit");
+		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "Выход");										//Exit
 		BOOL selected_item = TrackPopupMenuEx
 		(
 			cmMain, 
