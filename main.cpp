@@ -9,9 +9,11 @@ CONST INT g_i_INTERVAL = 1;
 CONST INT g_i_DISPLAY_INTERVAL = 10;
 CONST INT g_i_DOUBLE_BUTTON_SIZE = g_i_BUTTON_SIZE * 2 + g_i_INTERVAL;
 CONST INT g_i_DISPAY_WIDTH = (g_i_BUTTON_SIZE + g_i_INTERVAL) * 5;
-CONST INT g_i_DISPLAY_HEIGHT = 22;
+CONST INT g_i_DISPLAY_HEIGHT = g_i_BUTTON_SIZE;
 CONST INT g_i_START_X = 10;
 CONST INT g_i_START_Y = 10;
+CONST INT g_i_FONT_HEIGHT = g_i_DISPLAY_HEIGHT - 2;
+CONST INT g_i_FONT_WIDTH = g_i_FONT_HEIGHT / 2;
 CONST INT g_i_BUTTON_START_X = g_i_START_X;
 CONST INT g_i_BUTTON_START_Y = g_i_START_Y + g_i_DISPLAY_HEIGHT + g_i_INTERVAL;
 
@@ -45,17 +47,18 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	}
 	HWND hwnd = CreateWindowEx
 	(
-		NULL,							//exStyle
-		g_sz_WINDOW_CLASS,				//Class
-		g_sz_WINDOW_CLASS,				//Title
+		NULL,									//exStyle
+		g_sz_WINDOW_CLASS,						//Class
+		g_sz_WINDOW_CLASS,						//Title
 		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,		//Style
 		//WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,//Style
-		CW_USEDEFAULT, CW_USEDEFAULT,	//Position
+		CW_USEDEFAULT, CW_USEDEFAULT,			//Position
 		g_i_WINDOW_WIDTH, g_i_WINDOW_HEIGHT,	//Size
 		NULL, NULL,
 		hInstance,
 		NULL
 	);
+	//Digital-7
 	CHAR sz_button[2] = {};
 	for (int i = 6; i >= 0; i -= 3)
 	{
@@ -193,6 +196,18 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			NULL
 		);
 		break;
+	case WM_CTLCOLOREDIT:
+	{
+		HDC hdc = (HDC)wParam;						//C сообщение WM_CTLCOLOREDIT в 'wParam' принимается HDC 
+		//SetBkMode(hdc, TRANSPARENT);				//Делаем фон hEdit непрозрачным.
+		SetBkColor(hdc, RGB(0, 0, 100));
+		SetTextColor(hdc, RGB(255, 0, 0, ));
+		HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 150));
+		SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)hBrush);
+		SendMessage(hwnd, WM_ERASEBKGND, wParam, 0);
+		return (LRESULT)hBrush;
+	}
+		break;
 	case WM_COMMAND:
 	{
 		static DOUBLE a = DBL_MIN, b = DBL_MIN;
@@ -205,6 +220,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		CHAR sz_buffer[SIZE] = {};
 		CHAR sz_digit[2] = {};
 		SendMessage(hEdit, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
+		AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
+		HFONT hFont = CreateFont
+		(
+			g_i_FONT_HEIGHT, g_i_FONT_WIDTH,
+			0, 0,
+			FW_BOLD,			//Bold
+			FALSE,				//Italic
+			FALSE,				//Underline
+			FALSE,				//Strkeout
+			DEFAULT_CHARSET,
+			OUT_TT_PRECIS,
+			CLIP_TT_ALWAYS,
+			ANTIALIASED_QUALITY,
+			FF_DONTCARE,
+			"Digital-7"
+		);
+		SendMessage(hEdit, WM_SETFONT, (WPARAM)hFont, TRUE);
 		if (LOWORD(wParam) >= IDC_BUTTON_0 && LOWORD(wParam) <= IDC_BUTTON_9) 
 		{
 			if (input_operation) {
