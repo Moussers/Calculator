@@ -39,8 +39,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		hInstance,
 		NULL
 	);
-
-	//Digital-7
 	CHAR sz_button[2] = {};
 	for (int i = 6; i >= 0; i -= 3)
 	{
@@ -391,7 +389,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CONTEXTMENU:
 	{
 		HMENU cmMain = CreatePopupMenu();
-		AppendMenu(cmMain, MF_STRING, IDM_SQUARE_BLUE, "Сний цвет кнопок");					//Square blue
+		AppendMenu(cmMain, MF_STRING, IDM_SQUARE_BLUE, "Синий цвет кнопок");					//Square blue
 		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Металический цвет кнопок");			//Metal mistral
 		AppendMenu(cmMain, MF_SEPARATOR, NULL, NULL);
 		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "Выход");										//Exit
