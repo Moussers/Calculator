@@ -269,7 +269,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			if (input)
 			{
-				if (a == DBL_MIN) a = atof(sz_buffer);		//ANSI/ASKI to double
+				if (a == DBL_MIN) a = atof(sz_buffer);				//ANSI/ASKI to double
 				else b = atof(sz_buffer);
 				input = FALSE;
 				SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0);
