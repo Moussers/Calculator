@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="metal_mistral.dll/metal_mistral.dll.vcxproj" Id="ce090944-4b62-49f4-affe-f71daadf2394" />
-</Solution>
