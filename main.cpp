@@ -6,7 +6,7 @@
 #include"ColorAndSkins.h"
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-VOID SetSkin(HWND hwnd, CONST CHAR skin[]);
+//VOID SetSkin(HWND hwnd, CONST CHAR skin[]);
 VOID SetSkinFromDLL(HWND hwnd, CONST CHAR skin[]);
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
