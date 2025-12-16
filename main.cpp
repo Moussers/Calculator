@@ -414,9 +414,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_CLOSE, 0, 0);
 			break;
 		}
-		InvalidateRect(hwnd, 0, TRUE);
-		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);
+		//InvalidateRect(hwnd, 0, TRUE);			//Из-за выполения функции invlidateRect при смене цвета кнопок (change color buttons), прорисовывается часть кнопок: от 1 до 9, 
+		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);	//ноль и другие математичские знаки не отображаются.
 		DestroyMenu(cmMain);
+		HWND hEdit = GetDlgItem(hwnd, IDC_DISPLAY);
+		CONST INT SIZE = 256;
+		CHAR sz_buffer[SIZE] = {};
+		CHAR sz_digit[2] = {};
+		SendMessage(hEdit, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
+		SendMessage(hEdit, WM_SETTEXT, 0, (LPARAM)sz_buffer);				//Отрисовывется окно ввода при смене темы (ноль меняет цвет (красный\зелённый))
 	}
 	break;
 	case WM_DESTROY:
@@ -430,121 +436,121 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	return FALSE;
 }
-VOID SetSkin(HWND hwnd, CONST CHAR skin[])
-{
-		CHAR sz_filename[FILENAME_MAX] = {};
-		for (int i = 0; i <= 10; ++i)
-		{
-			sprintf(sz_filename, "ButtonsBMP\\%s\\button_%i.bmp", skin, i);
-			HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_0 + i);
-			HBITMAP bmpButton = (HBITMAP)LoadImage
-			(
-				GetModuleHandle(NULL),
-				sz_filename,
-				IMAGE_BITMAP,
-				i == 0 ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
-				g_i_BUTTON_SIZE,
-				LR_LOADFROMFILE
-			);
-			SendMessage(hButton, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		}
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_point.bmp", skin);
-		HWND hButtonPoint = GetDlgItem(hwnd, IDC_BUTTON_POINT);
-		HBITMAP bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonPoint, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_slash.bmp", skin);
-		HWND hButtonSlash = GetDlgItem(hwnd, IDC_BUTTON_SLASH);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonSlash, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_aster.bmp", skin);
-		HWND hButtonAster = GetDlgItem(hwnd, IDC_BUTTON_ASTER);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonAster, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_minus.bmp", skin);
-		HWND hButtonMinus = GetDlgItem(hwnd, IDC_BUTTON_MINUS);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonMinus, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_plus.bmp", skin);
-		HWND hButtonPlus = GetDlgItem(hwnd, IDC_BUTTON_PLUS);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonPlus, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_bsp.bmp", skin);
-		HWND hButtonBSP = GetDlgItem(hwnd, IDC_BUTTON_BSP);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonBSP, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_clr.bmp", skin);
-		HWND hButtonCLR = GetDlgItem(hwnd, IDC_BUTTON_CLR);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonCLR, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-		sprintf(sz_filename, "ButtonsBMP\\%s\\button_equal.bmp", skin);
-		HWND hButtonEqual = GetDlgItem(hwnd, IDC_BUTTON_EQUAL);
-		bmpButton = (HBITMAP)LoadImage
-		(
-			GetModuleHandle(NULL),
-			sz_filename,
-			IMAGE_BITMAP,
-			g_i_BUTTON_SIZE,
-			g_i_DOUBLE_BUTTON_SIZE,
-			LR_LOADFROMFILE
-		);
-		SendMessage(hButtonEqual, BM_SETIMAGE, 0, (LPARAM)bmpButton);
-}
+//VOID SetSkin(HWND hwnd, CONST CHAR skin[])
+//{
+//		CHAR sz_filename[FILENAME_MAX] = {};
+//		for (int i = 0; i <= 10; ++i)
+//		{
+//			sprintf(sz_filename, "ButtonsBMP\\%s\\button_%i.bmp", skin, i);
+//			HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_0 + i);
+//			HBITMAP bmpButton = (HBITMAP)LoadImage
+//			(
+//				GetModuleHandle(NULL),
+//				sz_filename,
+//				IMAGE_BITMAP,
+//				i == 0 ? g_i_DOUBLE_BUTTON_SIZE : g_i_BUTTON_SIZE,
+//				g_i_BUTTON_SIZE,
+//				LR_LOADFROMFILE
+//			);
+//			SendMessage(hButton, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		}
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_point.bmp", skin);
+//		HWND hButtonPoint = GetDlgItem(hwnd, IDC_BUTTON_POINT);
+//		HBITMAP bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonPoint, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_slash.bmp", skin);
+//		HWND hButtonSlash = GetDlgItem(hwnd, IDC_BUTTON_SLASH);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonSlash, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_aster.bmp", skin);
+//		HWND hButtonAster = GetDlgItem(hwnd, IDC_BUTTON_ASTER);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonAster, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_minus.bmp", skin);
+//		HWND hButtonMinus = GetDlgItem(hwnd, IDC_BUTTON_MINUS);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonMinus, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_plus.bmp", skin);
+//		HWND hButtonPlus = GetDlgItem(hwnd, IDC_BUTTON_PLUS);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonPlus, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_bsp.bmp", skin);
+//		HWND hButtonBSP = GetDlgItem(hwnd, IDC_BUTTON_BSP);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonBSP, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_clr.bmp", skin);
+//		HWND hButtonCLR = GetDlgItem(hwnd, IDC_BUTTON_CLR);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonCLR, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//		sprintf(sz_filename, "ButtonsBMP\\%s\\button_equal.bmp", skin);
+//		HWND hButtonEqual = GetDlgItem(hwnd, IDC_BUTTON_EQUAL);
+//		bmpButton = (HBITMAP)LoadImage
+//		(
+//			GetModuleHandle(NULL),
+//			sz_filename,
+//			IMAGE_BITMAP,
+//			g_i_BUTTON_SIZE,
+//			g_i_DOUBLE_BUTTON_SIZE,
+//			LR_LOADFROMFILE
+//		);
+//		SendMessage(hButtonEqual, BM_SETIMAGE, 0, (LPARAM)bmpButton);
+//}
 VOID SetSkinFromDLL(HWND hwnd, CONST CHAR skin[])
 {
 	HMODULE hSkin = LoadLibrary(skin);
