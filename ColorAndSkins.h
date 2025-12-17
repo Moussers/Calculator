@@ -8,6 +8,6 @@ CONST COLORREF g_clr_COLOR[][3] =
 {
 	{RGB(0,0,150), RGB(0,0,100), RGB(255,0,0)},
 	{RGB(150,150,150), RGB(50,50,50), RGB(0,255,0)},
-	{RGB(180,180,180), RGB(20,20,20), RGB(0,0,150)},
+	{RGB(180,180,180), RGB(0,0,100), RGB(140,160,70)},
 };
 CONST CHAR* g_sz_SKIN[] = { "square_blue", "metal_mistral", "IconForButtons"};
