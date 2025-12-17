@@ -391,6 +391,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		HMENU cmMain = CreatePopupMenu();
 		AppendMenu(cmMain, MF_STRING, IDM_SQUARE_BLUE, "Синий цвет кнопок");					//Square blue
 		AppendMenu(cmMain, MF_STRING, IDM_METAL_MISTRAL, "Металический цвет кнопок");			//Metal mistral
+		AppendMenu(cmMain, MF_STRING, IDM_ICONFORBUTTONS, "Соственный рисованный стиль");
 		AppendMenu(cmMain, MF_SEPARATOR, NULL, NULL);
 		AppendMenu(cmMain, MF_STRING, IDM_EXIT, "Выход");										//Exit
 		BOOL selected_item = TrackPopupMenuEx
@@ -410,12 +411,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case IDM_METAL_MISTRAL:
 			skinID = 1;
 			break;
+		case IDM_ICONFORBUTTONS:
+			skinID = 2;
+			break;
 		case IDM_EXIT:
 			SendMessage(hwnd, WM_CLOSE, 0, 0);
 			break;
 		}
-		//InvalidateRect(hwnd, 0, TRUE);			//Из-за выполения функции invlidateRect при смене цвета кнопок (change color buttons), прорисовывается часть кнопок: от 1 до 9, 
-		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);	//ноль и другие математичские знаки не отображаются.
+		//InvalidateRect(hwnd, 0, TRUE);									//Из-за выполения функции invlidateRect при смене цвета кнопок (change color buttons), прорисовывается часть кнопок: от 1 до 9, 
+		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);							//ноль и другие математичские знаки не отображаются.
 		DestroyMenu(cmMain);
 		HWND hEdit = GetDlgItem(hwnd, IDC_DISPLAY);
 		CONST INT SIZE = 256;
