@@ -1,9 +1,9 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include <iostream>
-#include"resource.h"
-#include"dimemsions.h"
-#include"ColorAndSkins.h"
+#include "resource.h"
+#include "dimemsions.h"
+#include "ColorAndSkins.h"
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 VOID SetSkinFromDLL(HWND hwnd, CONST CHAR skin[]);
@@ -436,7 +436,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_CLOSE, 0, 0);
 			break;
 		}
-		InvalidateRect(hwnd, 0, TRUE);									//Отрисовывет задний слой на котором отрисовываются клавиши
+		InvalidateRect(hwnd, 0, TRUE);										//Отрисовывет задний слой на котором отрисовываются клавиши
 		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);
 		DestroyMenu(cmMain);
 		HWND hEdit = GetDlgItem(hwnd, IDC_DISPLAY);
@@ -474,5 +474,7 @@ VOID SetSkinFromDLL(HWND hwnd, CONST CHAR skin[])
 		);
 		SendMessage(GetDlgItem(hwnd, i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
 	}
-	FreeLibrary(hSkin);
+	if (hSkin != NULL) {
+		FreeLibrary(hSkin);
+	}
 }
