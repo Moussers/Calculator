@@ -4,6 +4,7 @@
 //
 #define IDI_ICON1                       101
 #define IDI_ICON                        101
+#define IDR_FONT1						119
 #define IDM_EXIT                        200
 #define IDM_SQUARE_BLUE                 201
 #define IDM_METAL_MISTRAL               202

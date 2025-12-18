@@ -156,6 +156,27 @@
     <Image Include="..\..\ButtonsBMP\square_blue\button_plus.bmp" />
     <Image Include="..\..\ButtonsBMP\square_blue\button_point.bmp" />
     <Image Include="..\..\ButtonsBMP\square_blue\button_slash.bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\aster_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\BSP_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\CLR_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\eight_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\equal_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\five_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\four_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\minus_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\nine_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\plus_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\point_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\seven_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\six_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\slash_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\three_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\two_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\unit_paint_(button).bmp" />
+    <Image Include="..\..\TopicForCalculatorButtons\IconForButtons\zero_paint_(button).bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\..\Fonts\digital-7\digital-7.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

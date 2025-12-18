@@ -179,6 +179,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			NULL
 		);
 		AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
+		HINSTANCE fontDLL = LoadLibrary("digital7.dll");
+		HRSRC hRes = FindResource(fontDLL, MAKEINTRESOURCE(IDR_FONT1), "RCDATA");
+		void* fontData = LockResource(hRes);
+		HGLOBAL hGlobal = LoadResource(fontDLL, hRes);
 		HFONT hFont = CreateFont
 		(
 			g_i_FONT_HEIGHT, g_i_FONT_WIDTH,
@@ -217,10 +221,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hwnd, &rc);
 		HBRUSH brush = CreateSolidBrush(g_clr_COLOR[skinID][g_i_WINDOW_COLOR]);
 		FillRect(hdc, &rc, brush);
-		DeleteObject(brush);			//Best practice to manage resource, through creating/destroing repetedly caises overhead
+		DeleteObject(brush);
 		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);
 		UpdateWindow(hwnd);
-		return (LRESULT)TRUE;			//Indicate that the background has been erased
+		return (LRESULT)TRUE;			//Указывает на то что фон был стёрт
 	}
 	break;
 	case WM_COMMAND:
@@ -432,8 +436,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_CLOSE, 0, 0);
 			break;
 		}
-		InvalidateRect(hwnd, 0, TRUE);									//Из-за выполения функции invlidateRect при смене цвета кнопок (change color buttons), прорисовывается часть кнопок: от 1 до 9, 
-		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);							//ноль и другие математичские знаки не отображаются.
+		InvalidateRect(hwnd, 0, TRUE);									//Отрисовывет задний слой на котором отрисовываются клавиши
+		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);
 		DestroyMenu(cmMain);
 		HWND hEdit = GetDlgItem(hwnd, IDC_DISPLAY);
 		CONST INT SIZE = 256;
