@@ -164,7 +164,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 	{
 		AllocConsole();
-		freopen("CONOUTS$", "w", stdout);
+		FILE* log_f = freopen("CONOUTS$", "w", stdout);		//Указатель на лог файл. 
 		HWND hEdit = CreateWindowEx
 		(
 			NULL,
@@ -178,11 +178,35 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),		//hInstance
 			NULL
 		);
-		AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
-		HINSTANCE fontDLL = LoadLibrary("digital7.dll");
-		HRSRC hRes = FindResource(fontDLL, MAKEINTRESOURCE(IDR_FONT1), "RCDATA");
-		void* fontData = LockResource(hRes);
-		HGLOBAL hGlobal = LoadResource(fontDLL, hRes);
+		HMODULE fnt_dll = LoadLibrary("fonts.dll");
+		if (fnt_dll != 0) 
+		{
+			HRSRC fnt = FindResource(fnt_dll, MAKEINTRESOURCE(IDR_FONT1), MAKEINTRESOURCE(FONT));
+			if (fnt != NULL) 
+			{
+				DWORD fnt_size = SizeofResource(fnt_dll, fnt);
+				HGLOBAL hfnt = LoadResource(fnt_dll, fnt);
+				if (hfnt != NULL)
+				{
+					LPVOID fnt_data = LockResource(hfnt);
+					DWORD fnt_num = 0;
+					AddFontMemResourceEx(fnt_data, fnt_size, NULL, &fnt_num);
+				}
+				else 
+				{
+					AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
+				}
+			}
+			else 
+			{
+				AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
+			}
+			FreeLibrary(fnt_dll);
+		}
+		else 
+		{
+			AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
+		}
 		HFONT hFont = CreateFont
 		(
 			g_i_FONT_HEIGHT, g_i_FONT_WIDTH,
@@ -224,7 +248,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		DeleteObject(brush);
 		SetSkinFromDLL(hwnd, g_sz_SKIN[skinID]);
 		UpdateWindow(hwnd);
-		return (LRESULT)TRUE;			//Указывает на то что фон был стёрт
+		return (LRESULT)TRUE;						//Указывает на то что фон был стёрт
 	}
 	break;
 	case WM_COMMAND:

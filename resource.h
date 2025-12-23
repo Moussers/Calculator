@@ -2,6 +2,9 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resource.rc
 //
+
+#define FONT							8
+
 #define IDI_ICON1                       101
 #define IDR_FONT1						119
 #define IDM_EXIT                        200
