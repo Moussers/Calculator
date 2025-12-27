@@ -164,7 +164,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 	{
 		AllocConsole();
-		FILE* log_f = freopen("CONOUTS$", "w", stdout);		//Указатель на лог файл. 
+		FILE* logF = freopen("CONOUTS$", "w", stdout);		//Указатель на лог файл. 
 		HWND hEdit = CreateWindowEx
 		(
 			NULL,
@@ -178,14 +178,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),		//hInstance
 			NULL
 		);
-		HMODULE fnt_dll = LoadLibrary("fonts.dll");
-		if (fnt_dll != 0) 
+		HMODULE fntDll = LoadLibrary("fonts.dll");
+		if (fntDll != 0) 
 		{
-			HRSRC fnt = FindResource(fnt_dll, MAKEINTRESOURCE(IDR_FONT1), MAKEINTRESOURCE(FONT));
+			HRSRC fnt = FindResource(fntDll, MAKEINTRESOURCE(IDR_FONT1), MAKEINTRESOURCE(FONT));
 			if (fnt != NULL) 
 			{
-				DWORD fnt_size = SizeofResource(fnt_dll, fnt);
-				HGLOBAL hfnt = LoadResource(fnt_dll, fnt);
+				DWORD fnt_size = SizeofResource(fntDll, fnt);
+				HGLOBAL hfnt = LoadResource(fntDll, fnt);
 				if (hfnt != NULL)
 				{
 					LPVOID fnt_data = LockResource(hfnt);
@@ -201,7 +201,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			{
 				AddFontResourceEx("Fonts\\digital-7\\digital-7.ttf", FR_PRIVATE, 0);
 			}
-			FreeLibrary(fnt_dll);
+			FreeLibrary(fntDll);
 		}
 		else 
 		{
