@@ -237,7 +237,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		DeleteObject(hBrush);
 		//return (LRESULT)hBrush;
 	}
-	break;
+ 	break;
 	case WM_ERASEBKGND: 
 	{
 		HDC hdc = (HDC)wParam;
